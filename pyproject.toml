@@ -10,3 +10,12 @@ dependencies = [
     "polars>=1.44.2",
     "python-dotenv>=1.2.3",
 ]
+
+[dependency-groups]
+notebooks = [
+    "ipykernel>=7.4.0",
+    "jupyterlab>=4.6.4",
+    "matplotlib>=3.11.2",
+    "pandas>=3.0.6",
+    "seaborn>=0.13.2",
+]

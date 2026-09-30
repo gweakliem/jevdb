@@ -4,6 +4,8 @@ Proof of concept for scoring data with AI judgments directly in DuckDB, using
 the [jev community extension](https://duckdb.org/community_extensions/extensions/jev),
 which calls [TypeSafe's Jev](https://docs.typesafe.ai) model.
 
+The data was downloaded from Kaggle [Dating App Reviews: Tinder, Bumble & Hinge](https://www.kaggle.com/datasets/samartalwar/dating-app-reviews-tinder-bumble-and-hinge)
+
 ## What it does
 
 1. Loads `data/dating_app_reviews_sentiment.csv` into a `reviews` table,
@@ -63,7 +65,25 @@ con.sql("""
 ```
 
 Each run overwrites the saved tables, so the file reflects the latest run's
-row limit and word-count threshold.
+row limit and word-count threshold. Note that only one process at a time
+may hold a DuckDB file in read-write mode; if another tool (e.g. DBeaver)
+has it open, close that connection (or open it read-only) first.
+
+## Notebook analysis
+
+The Jupyter stack (JupyterLab, ipykernel, matplotlib, seaborn, pandas) is
+isolated in a `notebooks` dependency group and is not installed by default:
+
+```sh
+uv run --group notebooks jupyter lab
+```
+
+This launches JupyterLab using the project's virtualenv as the kernel.
+[`notebooks/01_review_analysis.ipynb`](notebooks/01_review_analysis.ipynb)
+is a starter notebook that explores the saved tables — topic distribution
+overall and by app, topic confidence, the probability features, and
+ratings by topic. It connects read-only to `data/jevdb.duckdb`, so run
+`uv run jevdb.py` first to generate the data.
 
 Re-runs re-judge rows, since the answer cache lives only for the process.
 Review text is sent to the TypeSafe API, so only point this at data you are

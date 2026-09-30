@@ -9,6 +9,9 @@ wheels/
 # Environment settings (contains a real API key)
 .env
 
+# Jupyter auto-save checkpoints
+.ipynb_checkpoints/
+
 # Virtual environments
 .venv
 data/
