@@ -1,0 +1,12 @@
+[project]
+name = "jevdb"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "click>=8.5.0",
+    "duckdb>=1.5.6",
+    "polars>=1.44.2",
+    "python-dotenv>=1.2.3",
+]
